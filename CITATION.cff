@@ -1,0 +1,54 @@
+cff-version: 1.2.0
+message: "If you use DocGen, please cite the paper below."
+title: "DocGen"
+type: software
+abstract: >-
+  DocGen turns the public repositories of a GitHub account, one or more
+  organizations, or a hand-picked list into a single Diátaxis-structured
+  Docusaurus documentation hub, driven by agent skills from an AI-powered IDE
+  and deployed on push with GitHub Actions.
+authors:
+  - family-names: Vyas
+    given-names: Amit
+license: MIT
+repository-code: "https://github.com/ICICLE-ai/DocGen"
+url: "https://github.com/ICICLE-ai/DocGen"
+keywords:
+  - documentation
+  - Diátaxis
+  - Docusaurus
+  - GitHub Pages
+  - agent skills
+  - AI4CI
+preferred-citation:
+  type: article
+  title: "A Documentation Catalog for the AI Ecosystem: Design of the ICICLE AI Training Catalog"
+  authors:
+    - family-names: Vyas
+      given-names: Amit
+    - family-names: Guzman
+      given-names: Carlos
+    - family-names: Savardekar
+      given-names: Neelima
+    - family-names: Thomas
+      given-names: Mary
+    - family-names: Miller
+      given-names: Michelle
+    - family-names: Morales
+      given-names: Alfonzo
+    - family-names: Stubbs
+      given-names: Joe
+    - family-names: Garcia
+      given-names: Christian
+    - family-names: Plale
+      given-names: Beth
+  journal: "Journal of Computational Science Education"
+  issn: "2153-4136"
+  volume: 17
+  issue: 2
+  start: 39
+  end: 45
+  year: 2026
+  month: 11
+  doi: "10.22369/issn.2153-4136/17/2/7"
+  url: "https://doi.org/10.22369/issn.2153-4136/17/2/7"

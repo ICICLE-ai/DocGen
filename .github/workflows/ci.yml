@@ -1,0 +1,68 @@
+name: CI
+
+# Tests the DocGen engine on every pull request (and on pushes to main) in the DocGen
+# template repository. The "test" job is the status check the main-branch ruleset requires
+# (configured in Settings → Rules → Rulesets; see README, "Protect the template repository").
+#
+# In hubs created from the template this workflow does nothing: the job only runs in
+# ICICLE-ai/DocGen or a repository marked as a template. Hub owners may delete this file.
+# Needs no secrets: the read-only built-in token is only used for public GitHub API reads.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: test
+    if: github.repository == 'ICICLE-ai/DocGen' || github.event.repository.is_template
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+
+      - name: Setup Node
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install
+        run: npm ci --no-audit --no-fund
+
+      - name: Unit tests
+        run: npm test
+
+      # Smoke test of the whole pipeline on two small public repos: DocGen's own README
+      # (Diátaxis template) and the Swagger Petstore (OpenAPI spec → APIs section).
+      # Only the runner's copy of the config changes; nothing is committed.
+      - name: Sample hub config
+        run: |
+          cat > docgen.config.json <<'EOF'
+          {
+            "$schema": "./docgen.schema.json",
+            "site": { "title": "DocGen CI", "name": "DocGen CI" },
+            "source": {
+              "repos": ["ICICLE-ai/DocGen", "swagger-api/swagger-petstore"],
+              "versions": { "enabled": false }
+            }
+          }
+          EOF
+
+      - name: Preflight
+        run: npm run doctor
+
+      - name: Build a sample hub (ingest → build → link check → leak scan)
+        run: npm run site
+        env:
+          GITHUB_TOKEN: ${{ github.token }}

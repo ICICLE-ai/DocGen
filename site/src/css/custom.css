@@ -1,0 +1,52 @@
+/* Brand colours are injected by src/plugins/docgen.js from branding.primaryColor.
+   Put any extra overrides here. */
+
+:root {
+  --ifm-code-font-size: 92%;
+  --ifm-navbar-item-padding-horizontal: 0.9rem;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme='dark'] {
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+.navbar__logo img {
+  max-height: 32px;
+  width: auto;
+}
+
+/* README badge rows */
+.markdown div[align='center'] {
+  text-align: center;
+  margin: 1rem 0 1.5rem;
+}
+.markdown div[align='center'] img {
+  display: inline-block;
+  margin: 0 0.15rem;
+  vertical-align: middle;
+}
+.markdown img {
+  max-width: 100%;
+}
+
+/* Centered footer */
+.footer {
+  text-align: center;
+}
+.footer__links {
+  justify-content: center;
+}
+.footer__meta {
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+/* Interactive API explorer (Redoc has no dark theme: keep it on a light card) */
+.docgen-api-explorer {
+  background: #fff;
+  color: #333;
+  border-radius: 8px;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  overflow: hidden;
+}

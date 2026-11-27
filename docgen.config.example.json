@@ -1,0 +1,59 @@
+{
+  "$schema": "./docgen.schema.json",
+  "site": {
+    "title": "Acme Docs",
+    "name": "Acme Research Lab",
+    "tagline": "Tutorials, how-to guides, reference and explanation for every Acme project.",
+    "description": "",
+    "heroTitle": "",
+    "copyrightHolder": "Acme Research Lab",
+    "footer": "Supported by the Example Foundation (award #0000000).",
+    "url": "auto",
+    "baseUrl": "auto"
+  },
+  "source": {
+    "owners": [
+      "your-username",
+      "your-org"
+    ],
+    "repos": [
+      "someone-else/a-tool-you-maintain"
+    ],
+    "include": [],
+    "exclude": [
+      "*-archive",
+      "sandbox-*",
+      "your-org/internal-*"
+    ],
+    "includeForks": false,
+    "includeArchived": false,
+    "versions": {
+      "enabled": true,
+      "max": 5,
+      "includePrereleases": false,
+      "includeDefaultBranch": false
+    }
+  },
+  "branding": {
+    "logo": "branding/logo.svg",
+    "favicon": "branding/favicon.ico",
+    "socialCard": "",
+    "primaryColor": "#2563eb",
+    "banner": ""
+  },
+  "content": {
+    "diataxis": "auto",
+    "stopAtHeadings": [
+      "Contributing",
+      "Changelog"
+    ],
+    "tagsFromTopics": true,
+    "tagsFromReadme": true,
+    "redactSecrets": true,
+    "openapi": {
+      "enabled": true,
+      "maxPerVersion": 3,
+      "explorer": true
+    }
+  }
+}

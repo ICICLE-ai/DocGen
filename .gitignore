@@ -1,0 +1,106 @@
+# ---------------------------------------------------------------------------
+# DocGen .gitignore: commit only source. Everything below is generated, cached,
+# machine-specific or secret, and is rebuilt locally and in CI.
+# ---------------------------------------------------------------------------
+
+# Dependencies
+node_modules/
+
+# DocGen generated content (`npm run ingest`; rebuilt from GitHub on every CI run)
+site/docs/
+site/apis/
+site/.docgen/
+
+# Docusaurus build output and caches
+site/build/
+site/.docusaurus/
+.docusaurus/
+.cache-loader/
+
+# Tool caches (webpack, eslint, npm, test coverage, temp files)
+.cache/
+.eslintcache
+.npm/
+.turbo/
+coverage/
+.nyc_output/
+*.tsbuildinfo
+.temp/
+tmp/
+
+# Logs
+*.log
+*.log.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# npm is the package manager (package-lock.json is committed); other lockfiles are accidental
+yarn.lock
+pnpm-lock.yaml
+bun.lockb
+
+# Secrets: DocGen never needs these; keep them out of git regardless
+.env
+.env.*
+!.env.example
+.envrc
+*.pem
+*.key
+*.p12
+*.pfx
+*.keystore
+id_rsa*
+id_ed25519*
+credentials.json
+.npmrc
+.netrc
+
+# Skill copies installed by `npx skills add` inside this project (the source is skills/)
+.agents/
+.claude/skills/
+.cursor/skills/
+.codex/skills/
+.gemini/skills/
+.windsurf/skills/
+skills-lock.json
+
+# Agent and editor local state
+.claude/settings.local.json
+.vscode/
+.idea/
+.fleet/
+.history/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd
+.TemporaryItems
+Icon?
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+.directory
+.Trash-*
+
+# Editor and merge leftovers
+*.bak
+*.orig
+*.rej
+*.tmp

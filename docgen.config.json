@@ -1,0 +1,16 @@
+{
+  "$schema": "./docgen.schema.json",
+  "site": {
+    "title": "My Docs",
+    "tagline": "Tutorials, how-to guides, reference and explanation, generated from GitHub."
+  },
+  "source": {
+    "owners": ["YOUR-USERNAME-OR-ORG"],
+    "repos": []
+  },
+  "branding": {
+    "logo": "",
+    "favicon": "",
+    "primaryColor": "#2563eb"
+  }
+}

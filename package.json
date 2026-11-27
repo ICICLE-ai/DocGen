@@ -1,0 +1,63 @@
+{
+  "name": "docgen",
+  "version": "0.1.0",
+  "description": "Turn your public GitHub repos (personal account, orgs or hand-picked) into a Diátaxis-structured Docusaurus documentation hub with search, versions, API references, llms.txt, sitemap and schema.org.",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "doctor": "node scripts/doctor.mjs",
+    "list": "node scripts/list.mjs",
+    "ingest": "node scripts/ingest.mjs",
+    "sections": "node scripts/sections.mjs",
+    "status": "node scripts/status.mjs",
+    "start": "docusaurus start site",
+    "build": "docusaurus build site",
+    "check": "node scripts/check.mjs",
+    "serve": "docusaurus serve site",
+    "clear": "docusaurus clear site",
+    "scan": "node scripts/scan.mjs",
+    "site": "npm run ingest && npm run build && npm run check && npm run scan",
+    "test": "node --test scripts/test/*.test.mjs"
+  },
+  "dependencies": {
+    "@docusaurus/core": "^3.10.2",
+    "@docusaurus/preset-classic": "^3.10.2",
+    "@docusaurus/theme-mermaid": "^3.10.2",
+    "@mdx-js/react": "^3.1.0",
+    "clsx": "^2.1.1",
+    "docusaurus-lunr-search": "^3.6.0",
+    "js-yaml": "^4.1.0",
+    "prism-react-renderer": "^2.4.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@docusaurus/module-type-aliases": "^3.10.2",
+    "@docusaurus/types": "^3.10.2"
+  },
+  "browserslist": {
+    "production": [
+      ">0.5%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 3 chrome version",
+      "last 3 firefox version",
+      "last 5 safari version"
+    ]
+  },
+  "engines": {
+    "node": ">=22.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ICICLE-ai/DocGen.git"
+  },
+  "homepage": "https://github.com/ICICLE-ai/DocGen#readme",
+  "overrides": {
+    "tinypool": "^2.2.0",
+    "serialize-javascript": "^7.1.4",
+    "uuid": "^11.1.1"
+  }
+}

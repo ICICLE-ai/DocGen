@@ -1,0 +1,40 @@
+# Weekly dependency updates as pull requests; CI (.github/workflows/ci.yml) tests each one.
+# Major version bumps are ignored here (they need a deliberate upgrade, e.g. Docusaurus 4);
+# security updates still arrive for any version once "Dependabot security updates" is on.
+#
+# GitHub Actions are pinned to full commit SHAs in the workflows; Dependabot updates the SHA
+# and its "# vX.Y.Z" comment together, so pins never go stale.
+#
+# Hubs created from the template get a copy of this file. It keeps a hub's dependencies
+# patched too; delete it if you don't want those pull requests (merging one redeploys).
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: deps
+    groups:
+      docusaurus:
+        patterns: ["@docusaurus/*"]
+      react:
+        patterns: ["react", "react-dom"]
+      other:
+        patterns: ["*"]
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    commit-message:
+      prefix: ci
+    groups:
+      actions:
+        patterns: ["*"]

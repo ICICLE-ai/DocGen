@@ -1,0 +1,116 @@
+name: Build & deploy docs
+
+# Runs on every push to main, and only then. You decide when the site changes:
+# build and check locally, push, and this workflow rebuilds and deploys.
+#
+# Needs NO secrets: the built-in, read-only GITHUB_TOKEN is only used to call
+# api.github.com for public data. AI is never called here. Section decisions made
+# locally by the docgen-map skill live in docgen.mapping.json (committed), so this run
+# applies the same decisions you approved. READMEs are fetched fresh, so upstream edits
+# made after your local preview are included.
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  # Skips the build quietly (no red ✗) in the DocGen template repository itself and in a
+  # hub whose docgen.config.json still has the YOUR-… placeholder, e.g. the first commit of
+  # a repo just created from the template.
+  gate:
+    runs-on: ubuntu-latest
+    outputs:
+      ready: ${{ steps.check.outputs.ready }}
+    steps:
+      - name: Checkout config
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+          sparse-checkout: docgen.config.json
+          sparse-checkout-cone-mode: false
+
+      - name: Configured hub?
+        id: check
+        env:
+          IS_TEMPLATE: ${{ github.event.repository.is_template }}
+        run: |
+          if [ "$IS_TEMPLATE" = "true" ]; then
+            echo "::notice::This is the DocGen template repository: nothing to build or deploy. Create a hub from it with 'Use this template'."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          elif grep -q 'YOUR-' docgen.config.json; then
+            echo "::notice::docgen.config.json still has the YOUR-USERNAME-OR-ORG placeholder: skipping build and deploy until it is configured."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  build:
+    needs: gate
+    if: needs.gate.outputs.ready == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      pages: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+
+      - name: Setup Node
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Read GitHub Pages URL
+        id: pages
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5.0.0
+
+      - name: Install
+        run: npm ci --no-audit --no-fund
+
+      - name: Preflight
+        run: npm run doctor
+
+      - name: Ingest READMEs from GitHub (uses docgen.mapping.json)
+        run: npm run ingest
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Build site
+        run: npm run build
+        env:
+          DOCGEN_SITE_URL: ${{ steps.pages.outputs.base_url }}
+
+      - name: Link check (no 404s)
+        run: npm run check
+
+      - name: Leak scan
+        run: npm run scan
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4.0.0
+        with:
+          path: site/build
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5

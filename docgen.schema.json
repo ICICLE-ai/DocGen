@@ -1,0 +1,243 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "docgen.config.json",
+  "description": "Configuration for a DocGen documentation site.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "source"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "site": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Site title (navbar, <title>, llms.txt)."
+        },
+        "tagline": {
+          "type": "string",
+          "description": "One line shown on the home page hero."
+        },
+        "description": {
+          "type": "string",
+          "description": "Home page banner text and meta description. Default: the GitHub org/user description (single owner) or repo description (single repo), else the tagline."
+        },
+        "url": {
+          "type": "string",
+          "description": "\"auto\" (GitHub Pages / CI) or an origin like https://docs.example.com",
+          "default": "auto"
+        },
+        "baseUrl": {
+          "type": "string",
+          "description": "\"auto\" or a path like /my-docs/",
+          "default": "auto"
+        },
+        "footer": {
+          "type": "string",
+          "description": "Extra footer line (e.g. funding acknowledgement), shown centered under the copyright."
+        },
+        "name": {
+          "type": "string",
+          "description": "Who the hub is for (lab, org, project). Default: the GitHub display name of the single owner, else the single repo title, else site.title."
+        },
+        "heroTitle": {
+          "type": "string",
+          "description": "Home page heading. Default: \"Welcome to the Official Documentation Hub for <name>\"."
+        },
+        "copyrightHolder": {
+          "type": "string",
+          "description": "Footer copyright holder. Default: name. The year is the build year."
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "owners": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "GitHub users and/or organizations (name or https://github.com/<name>). Every public repo of each is documented, minus forks/archived/excluded. Your personal account and orgs can be mixed: [\"me\", \"my-org\"]."
+        },
+        "repos": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Specific repos to document (owner/name or URL). Always included, even if fork/archived or outside include. Use alone to document only a few repos."
+        },
+        "include": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Only keep these repos from owners (glob; \"tool-*\" matches the name, \"acme/tool-*\" the full name). Empty = all. Does not affect repos."
+        },
+        "exclude": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Skip these repos from owners (glob on name or owner/name)."
+        },
+        "includeForks": {
+          "type": "boolean",
+          "default": false
+        },
+        "includeArchived": {
+          "type": "boolean",
+          "default": false
+        },
+        "includeEmpty": {
+          "type": "boolean",
+          "default": false,
+          "description": "Also list repos without a Markdown README."
+        },
+        "versions": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": true,
+              "description": "One folder per GitHub release."
+            },
+            "max": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 5,
+              "description": "Newest N releases per repo."
+            },
+            "includePrereleases": {
+              "type": "boolean",
+              "default": false
+            },
+            "includeDefaultBranch": {
+              "type": "boolean",
+              "default": false,
+              "description": "Add a \"next\" folder built from the default branch."
+            }
+          }
+        },
+        "mode": {
+          "enum": [
+            "repo",
+            "org"
+          ],
+          "deprecated": true,
+          "description": "Legacy. Use owners/repos."
+        },
+        "repo": {
+          "type": "string",
+          "deprecated": true,
+          "description": "Legacy single repo; same as repos: [value]."
+        },
+        "org": {
+          "type": "string",
+          "deprecated": true,
+          "description": "Legacy single org; same as owners: [value]."
+        }
+      },
+      "description": "What to document: any mix of whole accounts (owners) and hand-picked repos (repos). At least one entry is required."
+    },
+    "branding": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "logo": {
+          "type": "string",
+          "description": "https:// URL or a file inside branding/. Empty = neutral default."
+        },
+        "favicon": {
+          "type": "string",
+          "description": "https:// URL or a file inside branding/. Empty = logo, then default."
+        },
+        "socialCard": {
+          "type": "string",
+          "description": "1200x630 PNG/JPG for link previews. Empty = default."
+        },
+        "primaryColor": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$",
+          "default": "#2563eb"
+        },
+        "banner": {
+          "type": "string",
+          "description": "Optional home page banner background image: file in branding/ or https:// URL (wide image, ~1600x500)."
+        }
+      }
+    },
+    "content": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "diataxis": {
+          "enum": [
+            "auto",
+            "strict",
+            "off"
+          ],
+          "default": "auto",
+          "description": "auto = template headings if present, else classify sections by heading; strict = template headings only; off = one page per README."
+        },
+        "stopAtHeadings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Drop everything from the first heading with one of these names (e.g. Contributing)."
+        },
+        "tagsFromTopics": {
+          "type": "boolean",
+          "default": true,
+          "description": "Use GitHub repo topics as tags."
+        },
+        "tagsFromReadme": {
+          "type": "boolean",
+          "default": true,
+          "description": "Use a \"**Tags:** a, b\" line in the README as tags."
+        },
+        "redactSecrets": {
+          "type": "boolean",
+          "default": true,
+          "description": "Replace credential-looking strings with [REDACTED]."
+        },
+        "lastUpdated": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show \"Last updated\" on every page from the last commit that touched the README (1 extra API call per repo version)."
+        },
+        "openapi": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "OpenAPI/Swagger specs found in repos are published under \"APIs\" in the navbar.",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": true,
+              "description": "Detect openapi.* / swagger.* (.json/.yaml) files (1 API call per repo version)."
+            },
+            "maxPerVersion": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 3,
+              "description": "Max specs per repo version."
+            },
+            "explorer": {
+              "type": "boolean",
+              "default": true,
+              "description": "Add an interactive explorer page (Redoc, pinned + integrity-checked, loaded from jsDelivr in the browser)."
+            }
+          }
+        }
+      }
+    }
+  }
+}

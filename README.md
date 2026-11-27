@@ -2,7 +2,7 @@
 
 <h1 align="center" style="text-align: center;"><img src="site/static/img/docgen-logo.svg" alt="DocGen logo" width="36" height="36" align="absmiddle" style="vertical-align: middle;" /> DocGen</h1>
 
-**Turn public GitHub repositories into a Diátaxis documentation hub: build and check it locally, push, and it goes live.**
+**Let AI agents bring every README across your public repos into one structured documentation catalog, with easy search and links back to your work on GitHub.**
 
 [![CI](https://github.com/ICICLE-ai/DocGen/actions/workflows/ci.yml/badge.svg)](https://github.com/ICICLE-ai/DocGen/actions/workflows/ci.yml) [![Node.js](https://img.shields.io/badge/Node.js-%E2%89%A5%2022-5FA04E?logo=nodedotjs&logoColor=white)](https://nodejs.org) [![npm](https://img.shields.io/badge/npm-bundled-CB3837?logo=npm&logoColor=white)](https://www.npmjs.com) [![git](https://img.shields.io/badge/git-required-F05032?logo=git&logoColor=white)](https://git-scm.com) [![Docusaurus](https://img.shields.io/badge/Docusaurus-3.10-3ECC5F?logo=docusaurus&logoColor=white)](https://docusaurus.io) [![Diátaxis](https://img.shields.io/badge/docs-Di%C3%A1taxis-6f42c1)](https://diataxis.fr) [![Agent Skills](https://img.shields.io/badge/Agent%20Skills-npx%20skills-000000)](#install-the-skills) [![AGENTS.md](https://img.shields.io/badge/agents-AGENTS.md-black)](AGENTS.md) [![GitHub Pages](https://img.shields.io/badge/deploy-GitHub%20Pages-222?logo=github)](#your-first-documentation-hub-on-github-pages) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 
@@ -10,7 +10,7 @@
 
 </div>
 
-DocGen turns the public repositories of a GitHub account, one or more organizations, or a hand-picked list into a single [Docusaurus](https://docusaurus.io/) documentation hub. Every README becomes Overview, Tutorials, How-to, Reference and Explanation pages following [Diátaxis](https://diataxis.fr/), and the hub includes search, release versions, API references, `llms.txt`, a sitemap and schema.org data. Your AI-powered IDE drives the whole process with the bundled agent skills, sorts README sections that need it, and asks before every push. GitHub Actions then deploys the site to GitHub Pages for free.
+Any GitHub organization or user can create their own DocGen hub from this template. It turns the READMEs of their public repos, one or many, into a structured [Docusaurus](https://docusaurus.io/) documentation catalog with search, and every page links back to its source repo. Every README becomes Overview, Tutorials, How-to, Reference and Explanation pages following [Diátaxis](https://diataxis.fr/), and the hub includes search, release versions, API references, `llms.txt`, a sitemap and schema.org data. Your AI-powered IDE drives the whole process with the bundled agent skills, sorts README sections that need it, and asks before every push. GitHub Actions then deploys the site to GitHub Pages for free.
 
 **Tags:** Software, AI4CI
 
@@ -742,11 +742,3 @@ From [diataxis.fr](https://diataxis.fr/): documentation serves four distinct nee
 | AI-assisted developers | *"Make me a docs hub for my GitHub"* in their IDE |
 
 DocGen is a **developer tool**: a docs-as-code site template plus an agent skill pack. It isn't an AI harness. Harnesses (Claude Code, Cursor, Codex…) run the model, and DocGen is the deterministic template they drive, with skills and `AGENTS.md` telling them how to use it safely.
-
-## Roadmap
-
-- [ ] Deploy recipes for Netlify, Cloudflare, S3, Azure, nginx/Apache
-- [ ] Ingest a repo's `docs/` folder alongside its README
-- [ ] GitLab and Bitbucket sources
-- [ ] `noindex` / canonical-to-latest for older release folders
-- [ ] README translations → i18n

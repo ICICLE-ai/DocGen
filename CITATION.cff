@@ -3,9 +3,9 @@ message: "If you use DocGen, please cite the paper below."
 title: "DocGen"
 type: software
 abstract: >-
-  DocGen turns the public repositories of a GitHub account, one or more
-  organizations, or a hand-picked list into a single Diátaxis-structured
-  Docusaurus documentation hub, driven by agent skills from an AI-powered IDE
+  DocGen is a template any GitHub organization or user can use to turn the
+  READMEs of their public repositories into a structured, searchable
+  Docusaurus documentation catalog that links back to each source repo, driven by agent skills from an AI-powered IDE
   and deployed on push with GitHub Actions.
 authors:
   - family-names: Vyas
